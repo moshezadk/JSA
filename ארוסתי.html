@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מכתב מיוחד</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #4299e1;
+            --bg-color: #f7fafc;
+            --text-color: #2d3748;
+            --border-color: rgba(66, 153, 225, 0.2);
+            --shadow-color: rgba(26, 54, 93, 0.1);
+        }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #ffffff 50%, var(--bg-color) 100%);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: var(--text-color);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(66, 153, 225, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(66, 153, 225, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .letter-container {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 16px;
+            box-shadow: 
+                0 10px 30px var(--shadow-color),
+                0 1px 3px rgba(0,0,0,0.05);
+            max-width: 800px;
+            width: 90%;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-out;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            perspective: 2000px;
+        }
+
+        .letter-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                var(--accent), 
+                var(--secondary), 
+                var(--accent));
+            background-size: 200% 100%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 100% 0; }
+            50% { background-position: 0 0; }
+            100% { background-position: 100% 0; }
+        }
+
+        .letter-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .letter-header h1 {
+            margin: 0;
+            font-size: 2.8em;
+            font-weight: 600;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+            letter-spacing: 0.5px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            cursor: pointer;
+        }
+
+        .letter-header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent, 
+                var(--accent), 
+                var(--secondary), 
+                var(--accent), 
+                transparent);
+            transform: scaleX(0);
+            animation: underlineExpand 1.5s ease-out forwards;
+        }
+
+        @keyframes underlineExpand {
+            to { transform: scaleX(1); }
+        }
+
+        .letter-content {
+            text-align: right;
+            padding: 35px;
+            background: linear-gradient(145deg, #ffffff, var(--bg-color));
+            border-radius: 12px;
+            margin: 20px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px var(--shadow-color);
+        }
+
+        .letter-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 8px 15px var(--shadow-color),
+                0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .letter-content p {
+            margin-bottom: 25px;
+            color: var(--text-color);
+            font-size: 1.15em;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            animation-delay: calc(var(--animation-order) * 0.2s);
+            position: relative;
+            padding-right: 25px;
+            line-height: 1.9;
+            text-align: justify;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .letter-content p:hover {
+            transform: translateZ(30px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .letter-content p::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 12px;
+            width: 6px;
+            height: 6px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .letter-content p:hover::before {
+            transform: scale(1.5);
+            opacity: 1;
+            box-shadow: 0 0 10px var(--accent);
+        }
+
+        .signature {
+            text-align: left;
+            margin-top: 40px;
+            padding: 25px 20px;
+            border-top: 2px solid var(--border-color);
+            position: relative;
+            animation: fadeIn 1s ease-out;
+            animation-delay: 1.5s;
+            background: linear-gradient(to right, rgba(66, 153, 225, 0.1), transparent);
+            border-radius: 0 0 12px 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .signature::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 0%,
+                rgba(66, 153, 225, 0.1) 50%,
+                transparent 100%
+            );
+            animation: rotateGradient 4s linear infinite;
+        }
+
+        @keyframes rotateGradient {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .signature p {
+            margin: 0;
+            font-size: 1.1em;
+            color: var(--secondary);
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes floatHeart {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: fixed;
+            font-size: 20px;
+            color: var(--accent);
+            pointer-events: none;
+            animation: floatHeart 4s linear forwards;
+            z-index: 1000;
+        }
+
+        .special-message {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            padding: 20px 40px;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .special-message.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        @keyframes waveEffect {
+            0% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-30%) translateY(15px); }
+            100% { transform: translateX(-50%) translateY(0); }
+        }
+
+        @keyframes colorPulse {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        @keyframes confetti {
+            0% { transform: translateY(0) rotateZ(0); opacity: 1; }
+            100% { transform: translateY(100vh) rotateZ(360deg); opacity: 0; }
+        }
+
+        .confetti-piece {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: var(--accent);
+            top: -20px;
+            animation: confetti 4s ease-in-out infinite;
+            z-index: 1000;
+        }
+
+        .wave-bg {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, 
+                rgba(66, 153, 225, 0.1) 0%, 
+                rgba(44, 82, 130, 0.1) 50%, 
+                rgba(66, 153, 225, 0.1) 100%);
+            transform: translateX(-50%);
+            animation: waveEffect 15s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .glow-text {
+            text-shadow: 0 0 5px rgba(66, 153, 225, 0.5);
+            animation: colorPulse 10s linear infinite;
+        }
+
+        .sweet-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            padding: 15px 30px;
+            border-radius: 12px;
+            color: white;
+            font-size: 1.1em;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 80%;
+            pointer-events: none;
+        }
+
+        .sweet-message.show {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .clickable {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .clickable::after {
+            content: '✨';
+            position: absolute;
+            right: -20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .clickable:hover::after {
+            opacity: 1;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .letter-container,
+            .letter-content,
+            .special-message,
+            .heart,
+            .sparkle,
+            .wave-bg,
+            .confetti-piece,
+            .signature::after,
+            .glow-text,
+            .sweet-message,
+            .clickable::after {
+                transition: none;
+                animation: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .letter-container {
+                padding: 30px 20px;
+                width: 95%;
+            }
+
+            .letter-header h1 {
+                font-size: 2.2em;
+            }
+
+            .letter-content {
+                padding: 25px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .letter-container {
+                transform: translateY(0);
+                transition: transform 0.3s ease;
+            }
+
+            .letter-container:hover {
+                transform: translateY(-5px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wave-bg"></div>
+    <div class="letter-container">
+        <div class="letter-header">
+            <h1 class="glow-text clickable">לאבישג ארוסתי היקרה</h1>
+        </div>
+        
+        <div class="letter-content">
+            <p class="clickable" style="--animation-order: 1">תודה רבה על העוגות והאלפחורס המדהימים</p>
+            
+            <p class="clickable" style="--animation-order: 2">דבר ראשון, תודה רבה לך מעומק הלב על העוגות והאלפחורס שהכנת. הטעם המיוחד, עם השילוב העדני של מתיקות ואיזון טעמים מושלם, וההשקעה שהשקעת בהן מורגשים בכל ביס. המרקם הנימוח והטעם העשיר מתמזגים יחד בצורה מושלמת, כמו עוגיה שמתרככת בדיוק ברגע הנכון, ומעניקים חוויה מתוקה שאין כמותה.</p>
+            
+            <p class="clickable" style="--animation-order: 3">אני יודע שזה לא פשוט להכין משהו כל כך מוקפד, וזה רק מדגיש את הדיוק והמסירות שאת משקיעה בכל פרט. העוגות שלך הן לא רק מאכל טעים, אלא גם ביטוי להשקעה, לאכפתיות ולדאגה שאת מבטאת בצורה כל כך ברורה.</p>
+            
+            <p class="clickable" style="--animation-order: 4">אין ספק שזו הייתה אחת משבתות הטעימות והמיוחדות ביותר שחוויתי. תודה רבה על תשומת הלב והמאמץ שהשקעת.</p>
+        </div>
+
+        <div class="signature clickable">
+            <p>בהערכה,<br>אריאל</p>
+        </div>
+
+        <div class="sweet-message"></div>
+    </div>
+
+    <script>
+        // Add sparkle effect on hover
+        document.querySelector('.letter-container').addEventListener('mousemove', (e) => {
+            if (Math.random() > 0.9) {
+                const sparkle = document.createElement('div');
+                sparkle.className = 'sparkle';
+                sparkle.style.left = e.pageX + 'px';
+                sparkle.style.top = e.pageY + 'px';
+                document.body.appendChild(sparkle);
+                sparkle.style.animation = 'sparkle 1s ease-in-out forwards';
+                setTimeout(() => sparkle.remove(), 1000);
+            }
+        });
+
+        // Add floating hearts on click
+        document.addEventListener('click', (e) => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = e.pageX + 'px';
+            heart.style.top = e.pageY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        });
+
+        // Show special message on title click
+        document.querySelector('.letter-header h1').addEventListener('click', () => {
+            const message = document.querySelector('.special-message');
+            message.classList.add('show');
+            setTimeout(() => message.classList.remove('show'), 3000);
+        });
+
+        // Add paragraph animations
+        document.querySelectorAll('.letter-content p').forEach((p, index) => {
+            p.style.setProperty('--animation-order', index + 1);
+            
+            // Add hover effect
+            p.addEventListener('mouseover', () => {
+                p.style.transform = 'scale(1.02) translateY(-2px)';
+                p.style.transition = 'all 0.3s ease';
+            });
+            
+            p.addEventListener('mouseout', () => {
+                p.style.transform = '';
+            });
+        });
+
+        // Create confetti effect
+        function createConfetti() {
+            const colors = ['#4299e1', '#2c5282', '#1a365d', '#bee3f8'];
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti-piece';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.opacity = Math.random();
+                confetti.style.transform = `scale(${Math.random()})`;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 4000);
+            }
+        }
+
+        // Trigger confetti on special message show
+        document.querySelector('.letter-header h1').addEventListener('click', () => {
+            createConfetti();
+        });
+
+        // Add 3D effect on paragraph hover
+        document.querySelectorAll('.letter-content p').forEach(p => {
+            p.addEventListener('mousemove', (e) => {
+                const rect = p.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 20;
+                const rotateY = (centerX - x) / 20;
+                
+                p.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(30px)`;
+            });
+            
+            p.addEventListener('mouseleave', () => {
+                p.style.transform = '';
+            });
+        });
+
+        // מערך של משפטים מתוקים ומצחיקים
+        const sweetMessages = {
+            header: [
+                "את כמו GPS - תמיד מכוונת אותי לדרך הנכונה 🧭",
+                "את כמו WiFi - החיים בלעדייך לא מתפקדים 📶",
+                "את כמו עדכון תוכנה - כל יום מפתיעה אותי מחדש 🔄"
+            ],
+            content1: [
+                "את כמו שוקולד בלגי - אי אפשר להפסיק לחשוב עלייך 🍫",
+                "את כמו מתכון סודי - אין שנייה כמוך בעולם 📝",
+                "את כמו עוגת גבינה - תמיד מצליחה להעלות לי חיוך 🧀"
+            ],
+            content2: [
+                "את כמו קפה בבוקר - בלעדייך אני לא מתפקד ☕",
+                "את כמו מאסטר שף - הופכת כל רגע למטעמים 👩‍🍳",
+                "את כמו מתכון מושלם - כל המרכיבים הכי טובים יחד 📖"
+            ],
+            content3: [
+                "את כמו עוגיות חמות מהתנור - תמיד מחממת לי את הלב 🍪",
+                "את כמו קינוח מפנק - הדובדבן שבקצפת של חיי 🍰",
+                "את כמו מרשמלו - רכה מבחוץ, מתוקה מבפנים 🍡"
+            ],
+            content4: [
+                "את כמו גלידה ביום חם - תמיד יודעת איך לרענן לי את היום 🍦",
+                "את כמו פונדו שוקולד - ממיסה אותי בכל פעם מחדש 🫕",
+                "את כמו עוגת יומולדת - חוגגת איתך כל יום מחדש 🎂"
+            ],
+            signature: [
+                "את כמו חותמת מלכותית - נותנת תוקף לכל דבר 👑",
+                "את כמו חתימה דיגיטלית - אי אפשר לזייף כמוך 🔏",
+                "את כמו ברקוד - סורקת לי את הלב 📱"
+            ]
+        };
+
+        // פונקציה להצגת הודעה מתוקה
+        function showSweetMessage(message) {
+            const messageElement = document.querySelector('.sweet-message');
+            messageElement.textContent = message;
+            messageElement.classList.add('show');
+            setTimeout(() => messageElement.classList.remove('show'), 3000);
+        }
+
+        // הוספת מאזיני לחיצה לכל האלמנטים
+        document.querySelector('.letter-header h1').addEventListener('click', () => {
+            const randomMessage = sweetMessages.header[Math.floor(Math.random() * sweetMessages.header.length)];
+            showSweetMessage(randomMessage);
+        });
+
+        document.querySelectorAll('.letter-content p').forEach((p, index) => {
+            p.addEventListener('click', () => {
+                const category = `content${index + 1}`;
+                const messages = sweetMessages[category];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                showSweetMessage(randomMessage);
+            });
+        });
+
+        document.querySelector('.signature').addEventListener('click', () => {
+            const randomMessage = sweetMessages.signature[Math.floor(Math.random() * sweetMessages.signature.length)];
+            showSweetMessage(randomMessage);
+        });
+    </script>
+</body>
+</html>
